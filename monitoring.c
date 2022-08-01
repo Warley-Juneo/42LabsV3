@@ -72,22 +72,20 @@ void	start_monitoring(t_monitoring *data)
 			data->http.last_time = settime(data);
 			http_monitoring(data, fd);
 		}
-		// if (settime(data) - data->ping.last_time == 0 || settime(data) - data->ping.last_time >= (size_t)ft_atoi(data->ping.intervalo))
-		// {
-		// 	data->ping.last_time = settime(data);
-		// 	ping_monitoring(data, fd);
-		// }
-		// if (settime(data) - data->dns.last_time == 0 || settime(data) - data->dns.last_time >= (size_t)ft_atoi(data->dns.intervalo))
-		// {
-		// 	data->dns.last_time = settime(data);
-		// 	dns_monitoring(data, fd);
-		// }
-		//dup2(temp_out, STDOUT_FILENO);
-		//data->save_fd = fd[0];
-		//close(fd[1]);
-		//close(fd[0]);
-		//send_terminal(data);
-		return ;
+		if (settime(data) - data->ping.last_time == 0 || settime(data) - data->ping.last_time >= (size_t)ft_atoi(data->ping.intervalo))
+		{
+			data->ping.last_time = settime(data);
+			ping_monitoring(data, fd);
+		}
+		data->save_fd = fd[0];
+		if (settime(data) - data->dns.last_time == 0 || settime(data) - data->dns.last_time >= (size_t)ft_atoi(data->dns.intervalo))
+		{
+			data->dns.last_time = settime(data);
+			dns_monitoring(data, fd);
+		}
+		close(fd[1]);
+		close(fd[0]);
+		send_terminal(data);
 		sleep(1);
 	}
 }
@@ -105,65 +103,78 @@ void	send_terminal(t_monitoring *data)
 		if (buffer == NULL)
 			break ;
 		//Info HTTP
-		//fprintf(stderr, "salve2\n");
 		printf("buffer = %s", buffer);
-		// if (strstr(buffer, "HTTP/2"))
-		// {
-		// 	content = ft_split(buffer, ' ');
-		// 	data->content.http_status[x] = content[1];
-		// 	fprintf(stderr, "%s\n", data->content.http_status[x]);
-		// }
-		// else if (strstr(buffer ,"domain=."))
-		// {
-		// 	temp = ft_strchr(buffer, '.');
-		// 	data->content.http_domain[x] = temp + 1;
-		// 	fprintf(stderr, "%s\n", data->content.http_domain[x]);
-		// }
-		// else if (strstr(buffer, "date:"))
-		// {
-		// 	data->content.http_date[x] = ft_strchr(buffer, 'S');
-		// 	fprintf(stderr, "%s\n", data->content.http_date[x]);
-		// 	x++;
-		// }
+		if (strstr(buffer, "HTTP/2"))
+		{
+			content = ft_split(buffer, ' ');
+			data->content.http_status[x] = content[1];
+			fprintf(stderr, "%s\n", data->content.http_status[x]);
+		}
+		else if (strstr(buffer ,"domain=."))
+		{
+			temp = ft_strchr(buffer, '.');
+			data->content.http_domain[x] = temp + 1;
+			fprintf(stderr, "%s\n", data->content.http_domain[x]);
+		}
+		else if (strstr(buffer, "date:"))
+		{
+			data->content.http_date[x] = ft_strchr(buffer, 'S');
+			fprintf(stderr, "%s\n", data->content.http_date[x]);
+			x++;
+		}
 
-		// // Info PING
-		// else if (strstr(buffer, "PING"))
-		// {
-		// 	content = ft_split(buffer, ' ');
-		// 	data->content.ping_domain[y] = content[1];
-		// 	data->content.ping_ip[y] = content[2];
-		// 	fprintf(stderr, "%s\n", data->content.ping_domain[y]);
-		// 	fprintf(stderr, "%s\n", data->content.ping_ip[y]);
-		// }
-		// else if (strstr(buffer, "transmitted"))
-		// {
-		// 	data->content.ping_statistic[y] = buffer;
-		// 	fprintf(stderr, "%s\n", data->content.ping_statistic[y]);
-		// 	y++;
-		// }
+		// Info PING
+		else if (strstr(buffer, "PING"))
+		{
+			content = ft_split(buffer, ' ');
+			data->content.ping_domain[y] = content[1];
+			data->content.ping_ip[y] = content[2];
+			fprintf(stderr, "%s\n", data->content.ping_domain[y]);
+			fprintf(stderr, "%s\n", data->content.ping_ip[y]);
+		}
+		else if (strstr(buffer, "transmitted"))
+		{
+			data->content.ping_statistic[y] = buffer;
+			fprintf(stderr, "%s\n", data->content.ping_statistic[y]);
+			y++;
+		}
 
-		// // Info DNS
-		// else if (strstr(buffer, "QUERY: "))
-		// {
-		// 	temp = ft_strchr(buffer, 'Q');
-		// 	data->content.dns_statistic[z] = temp;
-		// 	fprintf(stderr, "%s\n", data->content.dns_statistic[z]);
-		// }
-		// else if (strstr(buffer, "ANSWER: SECTION:"))
-		// {
-		// 	free(buffer);
-		// 	buffer = get_next_line(data->temp_monitoring_log);
-		// 	content = ft_split(buffer, '\t');
-		// 	data->content.dns_domain[z] = ft_strtrim(buffer, ".");
-		// 	data->content.dns_ip[z] = content[5];
-		// 	fprintf(stderr, "%s\n", data->content.dns_domain[z]);
-		// 	fprintf(stderr, "%s\n", data->content.dns_ip[z]);
-		// }
-		// else if (strstr(buffer, "WHEN: "))
-		// {
-		// 	temp = ft_strchr(buffer, 'S');
-		// 	data->content.dns_statistic[z] = temp;
-		// 	z++;
-		// }
+		// Info DNS
+		else if (strstr(buffer, "QUERY: "))
+		{
+			temp = ft_strchr(buffer, 'Q');
+			data->content.dns_statistic[z] = temp;
+			fprintf(stderr, "%s\n", data->content.dns_statistic[z]);
+		}
+		else if (strstr(buffer, "ANSWER: SECTION:"))
+		{
+			free(buffer);
+			buffer = get_next_line(data->save_fd);
+			content = ft_split(buffer, '\t');
+			data->content.dns_domain[z] = ft_strtrim(buffer, ".");
+			data->content.dns_ip[z] = content[5];
+			fprintf(stderr, "%s\n", data->content.dns_domain[z]);
+			fprintf(stderr, "%s\n", data->content.dns_ip[z]);
+		}
+		else if (strstr(buffer, "WHEN: "))
+		{
+			temp = ft_strchr(buffer, 'S');
+			data->content.dns_date[z] = temp;
+			z++;
+		}
 	}
+
+	printf("%s\n",data->content.http_status[0]);
+	printf("%s\n",data->content.http_domain[0]);
+	printf("%s\n",data->content.http_date[0]);
+
+	printf("%s\n",data->content.ping_domain[0]);
+	printf("%s\n",data->content.ping_ip[0]);
+	printf("%s\n",data->content.ping_statistic[0]);
+
+	printf("%s\n",data->content.dns_statistic[0]);
+	printf("%s\n",data->content.dns_domain[0]);
+	printf("%s\n",data->content.dns_ip[0]);
+	printf("%s\n",data->content.dns_date[0]);
+
 }

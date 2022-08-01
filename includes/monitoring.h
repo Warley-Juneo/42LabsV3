@@ -44,37 +44,37 @@ typedef struct		s_display_content
 
 typedef struct		s_dns
 {
-	char	*name;
-	char	*protocolo;
-	char	*endereco;
-	char	*intervalo;
-	char	*serv_dns;
+	char		*name;
+	char		*protocolo;
+	char		*endereco;
+	char		*intervalo;
+	char		*serv_dns;
 
-	size_t	last_time;
+	size_t		last_time;
 
 }				t_dns;
 
 typedef struct		s_ping
 {
-	char	*name;
-	char	*protocolo;
-	char	*endereco;
-	char	*intervalo;
+	char		*name;
+	char		*protocolo;
+	char		*endereco;
+	char		*intervalo;
 
-	size_t	last_time;
+	size_t		last_time;
 
 }					t_ping;
 
 typedef struct		s_http
 {
-	char	*name;
-	char	*protocolo;
-	char	*endereco;
-	char	*metodo;
-	char	*cod;
-	char	*intervalo;
+	char		*name;
+	char		*protocolo;
+	char		*endereco;
+	char		*metodo;
+	char		*cod;
+	char		*intervalo;
 
-	size_t	last_time;
+	size_t		last_time;
 
 }				t_http;
 
@@ -85,11 +85,11 @@ typedef struct		s_monitoring
 	t_dns				dns;
 	t_display_content	content;
 
-	int				monitoring_db;
-	atomic_int		monitoring_log;
-	int				save_fd;
-	size_t			time_start;
-	int				verify_simplify;
+	int					monitoring_db;
+	atomic_int			monitoring_log;
+	int					save_fd;
+	size_t				time_start;
+	int					verify_simplify;
 }				t_monitoring;
 
 void	init_data(t_monitoring *data);

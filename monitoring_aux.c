@@ -14,7 +14,7 @@
 
 void	http_monitoring(t_monitoring *data, int fd[])
 {
-	char	*buffer = ft_strdup("www.facebook.com");
+	char	*buffer;
 	char	**comand;
 	int		status;
 	int		pid;
@@ -24,39 +24,47 @@ void	http_monitoring(t_monitoring *data, int fd[])
 		return ;
 	else if (pid == 0)
 	{
-		//buffer = data->http.endereco;
+		data->http.endereco = ft_strtrim(data->http.endereco, "\t");
 		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		execlp("ping", "ping", "-c 1", data->http.endereco, NULL);
+		execlp("curl", "curl", "-s", "-IX GET", data->http.endereco, NULL);
 	}
-	waitpid(pid, &status, WNOHANG);
-	data->save_fd = fd[0];
-	close(fd[1]);
-	while(1)
-	{
-		buffer = get_next_line(data->save_fd);
-		if (buffer == NULL)
-			return ;
-		printf("%s", buffer);
-	}
+	waitpid(pid, &status, 0);
 }
 
 void	ping_monitoring(t_monitoring *data, int *fd)
 {
-	char	*comand;
+	char	*buffer;
+	char	**comand;
 	int		status;
 	int		pid;
 
-	comand = ft_strjoin("ping -c 1 ", data->ping.endereco);
-	system(comand);
+	pid = fork();
+	if (pid == -1)
+		return ;
+	else if (pid == 0)
+	{
+		data->ping.endereco = ft_strtrim(data->ping.endereco, "\t");
+		dup2(fd[1], STDOUT_FILENO);
+		execlp("ping", "ping", "-c 1", data->ping.endereco, NULL);
+	}
+	waitpid(pid, &status, 0);
 }
 
 void	dns_monitoring(t_monitoring *data, int *fd)
 {
-	char	*comand;
+	char	*buffer;
+	char	**comand;
 	int		status;
 	int		pid;
 
-	comand = ft_strjoin("dig ", data->ping.endereco);
-	system(comand);
+	pid = fork();
+	if (pid == -1)
+		return ;
+	else if (pid == 0)
+	{
+		data->dns.endereco = ft_strtrim(data->dns.endereco, "\t");
+		dup2(fd[1], STDOUT_FILENO);
+		execlp("dig", "dig", data->dns.endereco, NULL);
+	}
+	waitpid(pid, &status, 0);
 }
