@@ -40,6 +40,7 @@ int	add_str(char **str, char **buffer)
 	temp = *buffer;
 	size = ft_find_size(*buffer);
 	*str = ft_substr(*buffer, 0, size);
+	*str = ft_strtrim(*str, "\t");
 	*buffer = ft_strdup(temp + size);
 	free(temp);
 	return (0);

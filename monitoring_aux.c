@@ -12,29 +12,33 @@
 
 #include "./includes/monitoring.h"
 
-void	http_monitoring(t_monitoring *data)
+void	http_monitoring(t_monitoring *data, int fd[])
 {
+	char	*buffer = ft_strdup("www.facebook.com");
 	char	**comand;
 	int		status;
 	int		pid;
 
-
 	pid = fork();
-	// comand = malloc(sizeof(char) * 4);
-	// comand[0] = ft_strdup("curl");
-	// comand[1] = ft_strdup("-IX GET");
-	// comand[2] = ft_strdup("www.example.com");
-	// comand[3] = NULL;
 	if (pid == -1)
 		return ;
 	else if (pid == 0)
 	{
-		//dup2(fd[1], STDOUT_FILENO);
-		//close(fd[1]);
-		//close(fd[0]);
-		execlp("curl", "curl", "-IX GET", "www.facebook.com", NULL);
+		//buffer = data->http.endereco;
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
+		execlp("ping", "ping", "-c 1", data->http.endereco, NULL);
 	}
 	waitpid(pid, &status, WNOHANG);
+	data->save_fd = fd[0];
+	close(fd[1]);
+	while(1)
+	{
+		buffer = get_next_line(data->save_fd);
+		if (buffer == NULL)
+			return ;
+		printf("%s", buffer);
+	}
 }
 
 void	ping_monitoring(t_monitoring *data, int *fd)

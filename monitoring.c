@@ -58,18 +58,19 @@ void	parse_monitoring_db(t_monitoring *data)
 
 void	start_monitoring(t_monitoring *data)
 {
+	char	*buffer;
 	int		temp_out;
-	//int		fd[2];
+	int		fd[2];
 
 	temp_out = dup(1);
 	while (!c_sig)
 	{
-		// if (pipe(fd) == -1)
-		// 	return ;
+		if (pipe(fd) == -1)
+			return ;
 		if (settime(data) - data->http.last_time == 0 || settime(data) - data->http.last_time >= (size_t)ft_atoi(data->http.intervalo))
 		{
 			data->http.last_time = settime(data);
-			http_monitoring(data);
+			http_monitoring(data, fd);
 		}
 		// if (settime(data) - data->ping.last_time == 0 || settime(data) - data->ping.last_time >= (size_t)ft_atoi(data->ping.intervalo))
 		// {
@@ -83,9 +84,10 @@ void	start_monitoring(t_monitoring *data)
 		// }
 		//dup2(temp_out, STDOUT_FILENO);
 		//data->save_fd = fd[0];
-	//	close(fd[1]);
+		//close(fd[1]);
 		//close(fd[0]);
 		//send_terminal(data);
+		return ;
 		sleep(1);
 	}
 }
