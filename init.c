@@ -35,17 +35,4 @@ void	init_data(t_monitoring *data)
 	data->dns.intervalo = NULL;
 	data->dns.serv_dns = NULL;
 	data->dns.last_time = 0;
-
-	data->content.http_status = NULL;
-	data->content.http_date = NULL;
-	data->content.http_domain = NULL;
-
-	data->content.ping_ip = NULL;
-	data->content.ping_domain = NULL;
-	data->content.ping_statistic = NULL;
-
-	data->content.dns_ip = NULL;
-	data->content.dns_domain = NULL;
-	data->content.dns_date = NULL;
-	data->content.dns_statistic = NULL;
 }

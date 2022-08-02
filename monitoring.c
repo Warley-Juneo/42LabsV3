@@ -95,7 +95,6 @@ void	send_terminal(t_monitoring *data)
 	char	*buffer;
 	char	**content;
 	char	*temp;
-	int		x, y, z, nb = 0;
 
 	while (1)
 	{
@@ -126,59 +125,33 @@ void	send_terminal(t_monitoring *data)
 		// Info PING
 		else if (strstr(buffer, "PING"))
 		{
+			printf("\033[1;34m-------------------PING-------------------\033[1;37m\n");
 			content = ft_split(buffer, ' ');
-			while (content[y])
-			{
-				printf("Content = %s\n", content[y++]);
-			}
-			data->content.ping_domain[y] = content[1];
-			data->content.ping_ip[y] = content[2];
-			fprintf(stderr, "%s\n", data->content.ping_domain[y]);
-			fprintf(stderr, "%s\n", data->content.ping_ip[y]);
+			printf("\033[0;32mEndereço:\033[1;37m %s\n", content[1]);
+			printf("\033[0;32mIP:\033[1;37m %s\n", content[2]);
+			get_next_line(data->save_fd);
+			get_next_line(data->save_fd);
+			get_next_line(data->save_fd);
+			printf("\033[0;32mStatistics:\033[1;37m %s\n", get_next_line(data->save_fd));
 		}
-		else if (strstr(buffer, "transmitted"))
+		else if (strstr(buffer, "status: "))
 		{
-			data->content.ping_statistic[y] = buffer;
-			fprintf(stderr, "%s\n", data->content.ping_statistic[y]);
-			y++;
-		}
+			int	i;
 
-		// Info DNS
-		else if (strstr(buffer, "QUERY: "))
-		{
-			temp = ft_strchr(buffer, 'Q');
-			data->content.dns_statistic[z] = temp;
-			fprintf(stderr, "%s\n", data->content.dns_statistic[z]);
-		}
-		else if (strstr(buffer, "ANSWER: SECTION:"))
-		{
-			free(buffer);
+			i = 0;
+			printf("\033[1;34m-------------------DNS-------------------\033[1;37m\n");
+			printf("\033[1;32mStatus:\033[1;37m %s", ft_strchr(buffer, 's'));
+			printf("\033[0;32mStatistics:\033[1;37m %s", ft_strchr(get_next_line(data->save_fd), 'Q'));
+			while (i++ < 6)
+				get_next_line(data->save_fd);
 			buffer = get_next_line(data->save_fd);
 			content = ft_split(buffer, '\t');
-			data->content.dns_domain[z] = ft_strtrim(buffer, ".");
-			data->content.dns_ip[z] = content[5];
-			fprintf(stderr, "%s\n", data->content.dns_domain[z]);
-			fprintf(stderr, "%s\n", data->content.dns_ip[z]);
-		}
-		else if (strstr(buffer, "WHEN: "))
-		{
-			temp = ft_strchr(buffer, 'S');
-			data->content.dns_date[z] = temp;
-			z++;
+			printf("\033[0;32mEndereço / ip:\033[1;37m %s / %s", ft_strtrim(content[0], "."), content[4]);
+			get_next_line(data->save_fd);
+			get_next_line(data->save_fd);
+			get_next_line(data->save_fd);
+			buffer = ft_strchr(get_next_line(data->save_fd), ':');
+			printf("\033[0;32mDate:\033[1;37m %s", buffer + 2);
 		}
 	}
-
-	// printf("%s\n",data->content.http_status[0]);
-	// printf("%s\n",data->content.http_domain[0]);
-	// printf("%s\n",data->content.http_date[0]);
-
-	// printf("%s\n",data->content.ping_domain[0]);
-	// printf("%s\n",data->content.ping_ip[0]);
-	// printf("%s\n",data->content.ping_statistic[0]);
-
-	// printf("%s\n",data->content.dns_statistic[0]);
-	// printf("%s\n",data->content.dns_domain[0]);
-	// printf("%s\n",data->content.dns_ip[0]);
-	// printf("%s\n",data->content.dns_date[0]);
-
 }

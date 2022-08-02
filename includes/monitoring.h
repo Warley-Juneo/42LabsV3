@@ -25,22 +25,25 @@
 #include <stdatomic.h>
 #include <signal.h>
 
-typedef struct		s_display_content
-{
-	char		**http_status;
-	char		**http_domain;
-	char		**http_date;
+#define GREEN "\033[0;32m"
+#define WHITE "\033[1;37m"
 
-	char		**ping_ip;
-	char		**ping_domain;
-	char		**ping_statistic;
+// typedef struct		s_display_content
+// {
+// 	char		**http_status;
+// 	char		**http_domain;
+// 	char		**http_date;
 
-	char		**dns_ip;
-	char		**dns_domain;
-	char		**dns_date;
-	char		**dns_statistic;
+// 	char		**ping_ip;
+// 	char		**ping_domain;
+// 	char		**ping_statistic;
 
-}				t_display_content;
+// 	char		**dns_ip;
+// 	char		**dns_domain;
+// 	char		**dns_date;
+// 	char		**dns_statistic;
+
+// }				t_display_content;
 
 typedef struct		s_dns
 {
@@ -83,7 +86,6 @@ typedef struct		s_monitoring
 	t_http				http;
 	t_ping				ping;
 	t_dns				dns;
-	t_display_content	content;
 
 	int					monitoring_db;
 	atomic_int			monitoring_log;
