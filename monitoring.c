@@ -67,22 +67,22 @@ void	start_monitoring(t_monitoring *data)
 	{
 		if (pipe(fd) == -1)
 			return ;
-		// if (settime(data) - data->http.last_time == 0 || settime(data) - data->http.last_time >= (size_t)ft_atoi(data->http.intervalo))
-		// {
-		// 	data->http.last_time = settime(data);
-		// 	http_monitoring(data, fd);
-		// }
+		if (settime(data) - data->http.last_time == 0 || settime(data) - data->http.last_time >= (size_t)ft_atoi(data->http.intervalo))
+		{
+			data->http.last_time = settime(data);
+			http_monitoring(data, fd);
+		}
 		if (settime(data) - data->ping.last_time == 0 || settime(data) - data->ping.last_time >= (size_t)ft_atoi(data->ping.intervalo))
 		{
 			data->ping.last_time = settime(data);
 			ping_monitoring(data, fd);
 		}
-		data->save_fd = fd[0];
 		if (settime(data) - data->dns.last_time == 0 || settime(data) - data->dns.last_time >= (size_t)ft_atoi(data->dns.intervalo))
 		{
 			data->dns.last_time = settime(data);
 			dns_monitoring(data, fd);
 		}
+		data->save_fd = fd[0];
 		close(fd[1]);
 		send_terminal(data);
 		close(fd[0]);
@@ -103,26 +103,9 @@ void	send_terminal(t_monitoring *data)
 			break ;
 
 		//Info HTTP
-		// if (strstr(buffer, "HTTP/2"))
-		// {
-		// 	content = ft_split(buffer, ' ');
-		// 	data->content.http_status[x] = content[1];
-		// 	fprintf(stderr, "%s\n", data->content.http_status[x]);
-		// }
-		// else if (strstr(buffer ,"domain=."))
-		// {
-		// 	temp = ft_strchr(buffer, '.');
-		// 	data->content.http_domain[x] = temp + 1;
-		// 	fprintf(stderr, "%s\n", data->content.http_domain[x]);
-		// }
-		// else if (strstr(buffer, "date:"))
-		// {
-		// 	data->content.http_date[x] = ft_strchr(buffer, 'S');
-		// 	fprintf(stderr, "%s\n", data->content.http_date[x]);
-		// 	x++;
-		// }
 
-		// Info PING
+
+		//Info PING
 		else if (strstr(buffer, "PING"))
 		{
 			printf("\033[1;34m-------------------PING-------------------\033[1;37m\n");

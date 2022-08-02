@@ -12,10 +12,16 @@
 
 #include "./includes/monitoring.h"
 
-void	http_monitoring(t_monitoring *data, int fd[])
+size_t	get_data(char *buffer, size_t itemsize, size_t nitems, void *ignorethis)
 {
-	char	*buffer;
-	char	**comand;
+	size_t	bytes = itemsize * nitems;
+	printf("%s\n", buffer);
+	return (bytes);
+}
+
+void	http_monitoring(t_monitoring *data, int *fd)
+{
+	char	*comand;
 	int		status;
 	int		pid;
 
@@ -24,17 +30,35 @@ void	http_monitoring(t_monitoring *data, int fd[])
 		return ;
 	else if (pid == 0)
 	{
-		data->http.endereco = ft_strtrim(data->http.endereco, "\t");
-		dup2(fd[1], STDOUT_FILENO);
-		execlp("curl", "curl", "-s", "-IX GET", data->http.endereco, NULL);
+		execlp("curl", "curl -s", "-IX GET", "www.facebook.com", NULL);
+		// CURL *curl = curl_easy_init();
+
+		// if (!curl)
+		// {
+		// 	fprintf(stderr, "init failed\n");
+		// 	return ;
+		// }
+
+		// //set options
+		// data->http.endereco = ft_strtrim(data->http.endereco, "\t");
+		// curl_easy_setopt(curl, CURLOPT_URL, data->http.endereco);
+		// curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, get_data);
+
+		// // perform out action
+		// CURLcode result = curl_easy_perform(curl);
+		// if (result != CURLE_OK)
+		// {
+		// 	fprintf(stderr, "Dowload problem: %s\n", curl_easy_strerror(result));
+		// }
+
+		// curl_easy_cleanup(curl);
+		// return ;
 	}
 	waitpid(pid, &status, 0);
 }
 
 void	ping_monitoring(t_monitoring *data, int *fd)
 {
-	char	*buffer;
-	char	**comand;
 	int		status;
 	int		pid;
 
@@ -52,8 +76,6 @@ void	ping_monitoring(t_monitoring *data, int *fd)
 
 void	dns_monitoring(t_monitoring *data, int *fd)
 {
-	char	*buffer;
-	char	**comand;
 	int		status;
 	int		pid;
 

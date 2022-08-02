@@ -104,7 +104,7 @@ void	parse_monitoring_dns(t_monitoring *data, int fd);
 
 // monitoring
 void	ping_monitoring(t_monitoring *data, int *fd);
-void	http_monitoring(t_monitoring *data, int fd[]);
+void	http_monitoring(t_monitoring *data, int *fd);
 void	dns_monitoring(t_monitoring *data, int *fd);
 
 // times
