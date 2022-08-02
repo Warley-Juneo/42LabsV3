@@ -14,7 +14,7 @@
 # define MONITORING_H
 
 #include <stdio.h>
-#include <curl/curl.h>
+// #include <curl/curl.h>
 #include <fcntl.h>
 #include ".././libft/libft.h"
 #include <stdlib.h>
