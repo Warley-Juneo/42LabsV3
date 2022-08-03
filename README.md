@@ -1,5 +1,4 @@
 <h1 align="center">Desafio 42Labs 3º Edição 💻</h1>
-![42_Technologies_logo](https://user-images.githubusercontent.com/84791310/182486687-6cdaeda0-137b-48b2-a715-3186ecb84a68.svg)
 <h2 align="center">Descrição do projeto</h2>
 <p>Um serviço de monitoramente que utiliza alguns protocolos para trazer informações sobre a sua aplicação web.</p>
 :hammer: Funcionalidades do projeto
