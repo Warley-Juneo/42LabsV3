@@ -6,7 +6,7 @@
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 13:16:00 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/08/02 23:12:57 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:06:44 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	validate_parse_http(t_monitoring *data)
 		if (!ft_isdigit(data->http.cod[i]))
 		{
 			write(2, "Config codigo http Error\n", 27);
+			printf("%s\n", data->http.cod);
 			exit(1);
 		}
 		i++;

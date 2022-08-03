@@ -6,7 +6,7 @@
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:58:35 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/08/02 21:49:29 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:56:29 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,10 @@ typedef struct		s_monitoring
 	int				save_fd;
 	size_t			time_start;
 	int				verify_simplify;
+	int				teste;
 }				t_monitoring;
 
-void	init_data(t_monitoring *data);
+void	init_data(t_monitoring *data, int argc);
 
 // Parse
 void	parse_monitoring_db(t_monitoring *data);

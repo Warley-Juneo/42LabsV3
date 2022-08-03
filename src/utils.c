@@ -6,7 +6,7 @@
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 13:16:53 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/08/02 23:06:41 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:04:30 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,5 @@ int	add_str(char **str, char **buffer)
 	*str = ft_substr(*buffer, 0, size);
 	if (temp[size - 1])
 		*buffer = ft_strdup(temp + size);
-	free(temp);
 	return (0);
 }

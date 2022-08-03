@@ -6,7 +6,7 @@
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:58:35 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/08/02 23:06:56 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:14:58 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ int	main(int argc, char *argv[])
 {
 	t_monitoring	data;
 
+
 	if (argc > 2)
+	{
 		printf("Too many arguments\n");
+		exit(1);
+	}
 	data.verify_simplify = 0;
 	if (argc == 2)
 	{
@@ -52,7 +56,7 @@ int	main(int argc, char *argv[])
 		}
 	}
 	signal(SIGINT, sigint);
-	init_data(&data);
+	init_data(&data, argc);
 	parse_monitoring_db(&data);
 	data.time_start = time_start();
 	start_monitoring(&data);

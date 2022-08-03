@@ -6,15 +6,16 @@
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 13:15:17 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/08/02 23:06:03 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:57:07 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include ".././includes/monitoring.h"
 
-void	init_data(t_monitoring *data)
+void	init_data(t_monitoring *data, int argc)
 {
-	data->monitoring_db = open("./config/monitoring.db", O_RDONLY);
+	if (argc != 3)
+		data->monitoring_db = open("./config/monitoring.db", O_RDONLY);
 	if (data->monitoring_db == -1)
 	{
 		printf("Monitoring.db não encontrado");

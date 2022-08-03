@@ -43,20 +43,22 @@ void	send_terminal_http_s(t_monitoring *data)
 {
 	char	**content;
 
-	// printf("\033[1;34m|----------------------------------HTTP----------------------------------|\033[1;37m\n");
-	// dprintf(data->monitoring_log, "|----------------------------------HTTP----------------------------------|\n");
-	// printf("\033[1;34m|\033[0;32mNome:\033[1;37m %s\n", data->http.name);
-	// dprintf(data->monitoring_log, "|Nome: %s\n", data->http.name);
-	// printf("\033[1;34m|\033[0;32mStatus:\033[1;37m %d\n", data->http.code);
-	// dprintf(data->monitoring_log, "|Status: %d", data->http.code);
-	// get_next_line(data->save_fd);
-	// buffer = ft_strchr(get_next_line(data->save_fd), ':');
-	// printf("\033[1;34m|\033[0;32mDate:\033[1;37m %s", buffer + 2);
-	// dprintf(data->monitoring_log, "|Date: %s", buffer + 2);
-	// printf("\033[1;34m|------------------------------------------------------------------------|\033[1;37m\n");
-	// dprintf(data->monitoring_log, "|------------------------------------------------------------------------|\n");
+	printf("\033[1;34m|----------------------------------HTTP----------------------------------|\033[1;37m\n");
+	printf("\033[1;34m|\033[0;32mNome:\033[1;37m %s\n", data->http.name);
+	printf("\033[1;34m|\033[0;32mEndereço:\033[1;37m %s\n", data->http.endereco);
+	printf("\033[1;34m|\033[0;32mStatus:\033[1;37m %d\n", data->http.code);
+	printf("\033[1;34m|\033[0;32mSaúde:\033[1;37m %s\n", (data->http.code != 200) ? "ko" : "ok");
+	
+	dprintf(data->monitoring_log, "|----------------------------------HTTP----------------------------------|\n");
+	dprintf(data->monitoring_log, "|Nome: %s\n", data->http.name);
+	dprintf(data->monitoring_log, "|Endereço: %s\n", data->http.endereco);
+	dprintf(data->monitoring_log, "|Status: %d\n", data->http.code);
+	dprintf(data->monitoring_log, "|Saúde: %s\n", (data->http.code != 200) ? "ko" : "ok");
 
-	return ;
+
+	printf("\033[1;34m|\033[0;32mDate:\033[1;37m %s", asctime(data->http.time));
+	dprintf(data->monitoring_log, "|Date: %s", asctime(data->http.time));
+	printf("\033[1;34m|------------------------------------------------------------------------|\033[1;37m\n");
 }
 
 void	send_terminal_ping_s(t_monitoring *data, char *buffer)
@@ -85,7 +87,7 @@ void	send_terminal_dns_s(t_monitoring *data, char *buffer)
 {
 	char	**content;
 	char	*temp;
-	int	i;
+	int		i;
 
 	i = 0;
 	printf("\033[1;34m|----------------------------------DNS-----------------------------------|\033[1;37m\n");
@@ -158,7 +160,7 @@ void	send_terminal_dns(t_monitoring *data, char *buffer)
 {
 	char	**content;
 	char	*temp;
-	int	i;
+	int		i;
 
 	i = 0;
 	printf("\033[1;34m|----------------------------------DNS-----------------------------------|\033[1;37m\n");
