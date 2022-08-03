@@ -48,7 +48,7 @@ void	send_terminal_http_s(t_monitoring *data)
 	printf("\033[1;34m|\033[0;32mEndereço:\033[1;37m %s\n", data->http.endereco);
 	printf("\033[1;34m|\033[0;32mStatus:\033[1;37m %d\n", data->http.code);
 	printf("\033[1;34m|\033[0;32mSaúde:\033[1;37m %s\n", (data->http.code != 200) ? "ko" : "ok");
-	
+
 	dprintf(data->monitoring_log, "|----------------------------------HTTP----------------------------------|\n");
 	dprintf(data->monitoring_log, "|Nome: %s\n", data->http.name);
 	dprintf(data->monitoring_log, "|Endereço: %s\n", data->http.endereco);
@@ -129,7 +129,7 @@ void	send_terminal_http(t_monitoring *data)
 	printf("\033[1;34m|\033[0;32mStatus:\033[1;37m %d\n", data->http.code);
 	printf("\033[1;34m|\033[0;32mSaúde:\033[1;37m %s\n", (data->http.code != 200) ? "ko" : "ok");
 	dprintf(data->monitoring_log, "%s\n", data->http.name);
-    dprintf(data->monitoring_log, "%d\n", data->http.code);
+	dprintf(data->monitoring_log, "%d\n", data->http.code);
 	printf("\033[1;34m|\033[0;32mDate:\033[1;37m %s", asctime(data->http.time));
 	dprintf(data->monitoring_log,  "%s\n", asctime(data->http.time));
 	printf("\033[1;34m|------------------------------------------------------------------------|\033[1;37m\n");

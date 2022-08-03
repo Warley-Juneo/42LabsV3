@@ -6,7 +6,7 @@
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 22:58:35 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/08/03 00:14:58 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:40:52 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char *argv[])
 		{
 			char	*buffer;
 			int		man;
-			
+
 			man = open("manual.txt", O_RDONLY);
 			while (1)
 			{
@@ -88,8 +88,8 @@ void	start_monitoring(t_monitoring *data)
 			http_monitoring(data, fd);
 			if (data->verify_simplify)
 				send_terminal_http_s(data);
-       		else
-            	send_terminal_http(data);
+			else
+				send_terminal_http(data);
 		}
 		if (settime(data) - data->ping.last_time == 0 || settime(data) - data->ping.last_time >= (size_t)ft_atoi(data->ping.intervalo))
 		{
