@@ -1,0 +1,20 @@
+example	
+200
+Tue Aug  2 23:11:08 2022
+
+PING instagram.com (31.13.74.174) 56(84) bytes of data.
+64 bytes from instagram-p42-shv-01-gig2.fbcdn.net (31.13.74.174): icmp_seq=1 ttl=54 time=17.2 ms
+
+--- instagram.com ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+polemica do twitter	
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 16593
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;twitter.com.			IN	A
+
+;; ANSWER SECTION:
+
+;; Query time: 0 msec
+;; SERVER: 172.19.0.1#53(172.19.0.1)

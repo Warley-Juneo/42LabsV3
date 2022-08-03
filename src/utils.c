@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 13:16:53 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/07/28 17:54:34 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:06:41 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/monitoring.h"
+#include ".././includes/monitoring.h"
 
 int	ft_find_size(char *str)
 {
@@ -34,14 +34,14 @@ int	ft_find_size(char *str)
 
 int	add_str(char **str, char **buffer)
 {
-	char	*hu;
 	int		size;
 	char	*temp;
 
 	temp = *buffer;
 	size = ft_find_size(*buffer);
 	*str = ft_substr(*buffer, 0, size);
-	*buffer = ft_strdup(temp + size);
+	if (temp[size - 1])
+		*buffer = ft_strdup(temp + size);
 	free(temp);
 	return (0);
 }

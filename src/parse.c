@@ -6,11 +6,11 @@
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 13:16:00 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/07/29 17:17:06 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:12:57 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/monitoring.h"
+#include ".././includes/monitoring.h"
 
 int	validate_parse_http(t_monitoring *data)
 {
@@ -52,10 +52,13 @@ int	validate_parse_http(t_monitoring *data)
 void	parse_monitoring_http(t_monitoring *data, int fd)
 {
 	char	*buffer;
+	char	*temp;
 	int		size;
-
+	
 	buffer = get_next_line(fd);
+	temp = buffer;
 	buffer = ft_strtrim(buffer, "\n");
+	free(temp);
 	add_str(&data->http.name, &buffer);
 	add_str(&data->http.protocolo, &buffer);
 	add_str(&data->http.endereco, &buffer);

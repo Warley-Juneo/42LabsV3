@@ -1,12 +1,13 @@
 LIBFT = ./libft/libft.a
 
-SRC = monitoring.c init.c times.c parse.c utils.c monitoring_aux.c
-HEADERS = ./includes/monitoring.h
+SRC = monitoring.c init.c times.c parse.c utils.c monitoring_aux.c send_terminal.c
+
 
 OBJ_PATH = objects
 OBJ_SRC = $(SRC:%.c=$(OBJ_PATH)/%.o)
 OBJ_SRC = $(patsubst %.c,$(OBJ_PATH)/%.o, $(SRC))
 
+VPATH = ./src
 NAME = monitoring
 
 CC = gcc -g3
@@ -18,7 +19,7 @@ $(OBJ_PATH)/%.o: %.c
 
 all:	$(NAME)
 
-$(NAME):	$(OBJ_PATH) $(LIBFT) $(OBJ_SRC) $(HEADERS)
+$(NAME):	$(OBJ_PATH) $(LIBFT) $(OBJ_SRC)
 			$(CC) $(OBJ_SRC) $(CFLAGS) $(LIBFT) -o $(NAME)
 
 $(OBJ_PATH):
@@ -39,5 +40,8 @@ re:			clean fclean all
 
 run:		$(NAME)
 			./$(NAME)
+
+runs:		$(NAME)
+			./$(NAME) --simplify
 
 .PHONY: all clean fclean re

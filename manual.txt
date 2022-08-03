@@ -1,0 +1,21 @@
+Monitoring - Linux Manual Page
+
+SYNOPSIS
+    ./monitoring
+    ./monitoring [--simplify]
+
+DESCRIPTION
+    monitoring manda requisições de determinados protocolos
+    passados em um arquivo de configuração "monitoring.db",
+    e te devolve uma resposta personalizada contendo apenas
+    informações importantes para a leitura do usuario, e também
+    salvando as informações completas em um aquivo monitoring.log.
+
+    Os protocolos disponiveis são: HTTP (GET), PING e DNS.
+    A junção desses protocolos são suficiente, para você entender
+    oque está acontencendo com a sua aplicação web.
+
+OPTIONS
+    --simplify
+        use --simplify para o arquivo de log também vir com
+        informações simplificadas.

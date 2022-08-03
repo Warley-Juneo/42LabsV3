@@ -6,17 +6,21 @@
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 13:15:17 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/07/31 18:19:56 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:06:03 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/monitoring.h"
+#include ".././includes/monitoring.h"
 
 void	init_data(t_monitoring *data)
 {
-	data->verify_simplify = 0;
-	data->monitoring_db = open("./config/monitoring.db", O_RDONLY, O_APPEND);
-	data->monitoring_log = open("./logs/monitoring.log", O_RDWR);
+	data->monitoring_db = open("./config/monitoring.db", O_RDONLY);
+	if (data->monitoring_db == -1)
+	{
+		printf("Monitoring.db não encontrado");
+		exit(1);
+	}
+	data->monitoring_log = open("./logs/monitoring.log", O_RDWR | O_APPEND | O_CREAT, 0777);
 	data->http.name = NULL;
 	data->http.protocolo = NULL;
 	data->http.endereco = NULL;

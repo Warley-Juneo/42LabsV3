@@ -6,55 +6,34 @@
 /*   By: wjuneo-f <wjuneo-f@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 14:45:57 by wjuneo-f          #+#    #+#             */
-/*   Updated: 2022/07/31 20:36:38 by wjuneo-f         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:06:14 by wjuneo-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/monitoring.h"
+#include ".././includes/monitoring.h"
 
-size_t	get_data(char *buffer, size_t itemsize, size_t nitems, void *ignorethis)
-{
-	size_t	bytes = itemsize * nitems;
-	printf("%s\n", buffer);
-	return (bytes);
-}
 
 void	http_monitoring(t_monitoring *data, int *fd)
 {
-	char	*comand;
-	int		status;
-	int		pid;
+	CURL	*curl;
+	CURLcode res;
 
-	pid = fork();
-	if (pid == -1)
-		return ;
-	else if (pid == 0)
+	curl = curl_easy_init();
+	data->http.endereco = ft_strtrim(data->http.endereco, "\t");
+  	if(curl) 
 	{
-		execlp("curl", "curl -s", "-IX GET", "www.facebook.com", NULL);
-		// CURL *curl = curl_easy_init();
-
-		// if (!curl)
-		// {
-		// 	fprintf(stderr, "init failed\n");
-		// 	return ;
-		// }
-
-		// //set options
-		// data->http.endereco = ft_strtrim(data->http.endereco, "\t");
-		// curl_easy_setopt(curl, CURLOPT_URL, data->http.endereco);
-		// curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, get_data);
-
-		// // perform out action
-		// CURLcode result = curl_easy_perform(curl);
-		// if (result != CURLE_OK)
-		// {
-		// 	fprintf(stderr, "Dowload problem: %s\n", curl_easy_strerror(result));
-		// }
-
-		// curl_easy_cleanup(curl);
-		// return ;
+    	curl_easy_setopt(curl, CURLOPT_URL, data->http.endereco);
+		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_easy_setopt(curl, CURLOPT_NOBODY, 1l);
+   		res = curl_easy_perform(curl);
+		data->http.t = time(NULL);
+		data->http.time = localtime(&data->http.t);
+		if(res != CURLE_OK)
+      		fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+		curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &data->http.code);
+   		curl_easy_cleanup(curl);
 	}
-	waitpid(pid, &status, 0);
+	curl_global_cleanup();
 }
 
 void	ping_monitoring(t_monitoring *data, int *fd)
